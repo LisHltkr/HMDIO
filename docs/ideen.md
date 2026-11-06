@@ -14,6 +14,7 @@ jeder Idee gern ein GitHub-Issue werden, dann verweist der Commit darauf („Clo
 | 5 | Lücken beim Bearbeiten und Löschen schließen | zusammen mit 4 |
 | 6 | Optionen, die man einstellen kann | offen, Frage an Lisa |
 | 7 | Zusätzliches Einkommen (Vinted, eBay, Aufträge) | offen, Fragen an Lisa |
+| 8 | Sparen & Rücklagen: Geld einzahlen oder entnehmen | offen, Fragen an Lisa; zusammen mit 4 planen |
 
 ## 1 – Datumsfelder immer TT.MM.JJJJ
 
@@ -90,3 +91,22 @@ jeder Idee gern ein GitHub-Issue werden, dann verweist der Commit darauf („Clo
      - Daneben „erwartet“ getrennt anzeigen, zum Beispiel einen Verkauf, der noch nicht bezahlt ist.
   2. Unsichere Beträge, etwa ein Auftrag, der noch nicht fest zugesagt ist: Gibt es die als „vielleicht“?
   3. Eine Monatsübersicht der Nebeneinnahmen nach Kategorie?
+
+## 8 – Sparen & Rücklagen: Geld einzahlen oder entnehmen
+
+- **Wunsch:** „Bei Sparen und Rücklagen ggf. auch einen Button zum Hinzufügen oder Entnehmen von Geld
+  von dem Konto“
+- **Heute:**
+  - Die Seite zeigt Sparziele (anlegen, bearbeiten, löschen) und ob die Rücklagen reichen.
+  - Geld kommt nur über geplante Umbuchungen (Sparrate) oder einen neu eingetragenen Kontostand
+    (Seite „Konten“) aufs Sparkonto.
+- **Vorschlag:** Auf jeder Konto-Karte die Knöpfe „Einzahlen“ und „Entnehmen“. Ein kleiner Dialog fragt
+  Betrag, Gegenkonto (z. B. Girokonto oder „von außen“) und Datum (vorbelegt: heute) ab.
+- **Offene Fragen an Lisa:**
+  1. Ist das Geld meistens eine Umbuchung zwischen deinen eigenen Konten?
+     - Dann ändern sich beide Stände, und „wirklich verfügbar“ auf dem Giro sinkt beim Einzahlen.
+     - Oder kommt es auch von außen (Geschenk, Verkauf; dann gehört es zu Idee 7)?
+  2. Soll eine Entnahme einem Sparziel oder einer Rücklage zugeordnet werden, z. B. „Puffer“ oder
+     „Kfz-Versicherung“?
+  3. Jede Ein- und Auszahlung landet im Verlauf (Idee 4) und lässt sich dort zurücknehmen. Deshalb
+     am besten zusammen mit dem Verlauf bauen.
