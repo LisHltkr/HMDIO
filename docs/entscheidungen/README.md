@@ -30,4 +30,5 @@ Was wird dadurch leichter, was schwerer, was ist noch offen?
 | Nr. | Entscheidung | Status |
 |-----|--------------|--------|
 | [0001](0001-installer-aus-github-actions.md) | Installer entstehen in GitHub Actions, nicht auf einem PC | gilt |
+| [0002](0002-ende-zu-ende-verschluesselung.md) | Daten werden im Gerät verschlüsselt, bevor sie es verlassen | gilt |
 | [0004](0004-handy-als-web-app.md) | Aufs iPhone als Web-App vom Home-Bildschirm, nicht als native App | gilt |
