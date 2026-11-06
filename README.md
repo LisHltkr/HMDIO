@@ -30,7 +30,8 @@ Die genauen Rechenregeln stehen in [docs/PLAN.md](docs/PLAN.md).
 ## Installieren
 
 **Windows:** Unter GitHub → Actions → „Installer bauen“ den letzten grünen Lauf öffnen und unten bei
-Artifacts `finanz-cockpit-windows` herunterladen. Darin liegen `.msi` und `-setup.exe`. Der Installer
+Artifacts `finanz-cockpit-windows` herunterladen. Jeder Pull Request baut einen eigenen Installer, damit du
+ihn vor dem Merge testen kannst. Darin liegen `.msi` und `-setup.exe`. Der Installer
 ist nicht signiert, beim ersten Start warnt Windows deshalb. Klick dann auf „Weitere Informationen“ und
 „Trotzdem ausführen“ (siehe [Entscheidung 0001](docs/entscheidungen/0001-installer-aus-github-actions.md)).
 

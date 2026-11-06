@@ -1,10 +1,14 @@
 # Baut den Windows-Installer (siehe docs/entscheidungen/0001-installer-aus-github-actions.md).
-# Starten: GitHub → Actions → „Installer bauen“ → Run workflow (Branch wählen).
-# Ergebnis: unten auf der Seite des Laufs unter „Artifacts“ → finanz-cockpit-windows.
-# Ein Tag wie v0.2.0 startet den Bau ebenfalls.
+# Läuft:
+#  - bei jedem Pull Request → Installer zum Testen VOR dem Merge
+#  - per GitHub → Actions → „Installer bauen“ → Run workflow (den Knopf zeigt GitHub erst,
+#    wenn diese Datei auf main liegt)
+#  - bei einem Tag wie v0.2.0
+# Ergebnis: auf der Seite des Laufs unten unter „Artifacts“ → finanz-cockpit-windows.
 name: Installer bauen
 
 on:
+  pull_request:
   workflow_dispatch:
   push:
     tags: ['v*']

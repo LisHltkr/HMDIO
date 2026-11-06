@@ -25,8 +25,13 @@ mit Windows. Das Repo ist öffentlich.
 
 ## Entscheidung
 
-Installer entstehen nur über den Workflow „Installer bauen“, gestartet von Hand oder über einen
-Tag `v*`. Gebaut wird vorerst nur für Windows, weil nur Windows gebraucht wird.
+Installer entstehen nur über den Workflow „Installer bauen“. Er läuft bei jedem Pull Request, damit
+du vor dem Merge testen kannst, außerdem von Hand und bei einem Tag `v*`. Gebaut wird vorerst nur für
+Windows, weil nur Windows gebraucht wird.
+
+*Nachtrag 2026-11-06:* Den Knopf „Run workflow“ zeigt GitHub erst, wenn die Workflow-Datei auf
+`main` liegt. Ein Branch allein lässt sich so nicht bauen. Deshalb kam der Auslöser `pull_request`
+dazu.
 
 ## Folgen
 
