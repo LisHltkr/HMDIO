@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "check": "pnpm test && pnpm build",
+    "sync-server": "node server/sync-server.ts",
     "tauri": "tauri"
   },
   "dependencies": {

@@ -3,3 +3,7 @@ dist
 src-tauri/target
 src-tauri/gen
 *.zip
+
+# Sync-Server: Zugangsschlüssel und Daten gehören nie ins Repo
+server/token.txt
+server/daten/

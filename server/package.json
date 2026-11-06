@@ -1,0 +1,12 @@
+{
+  "name": "finanz-cockpit-sync-server",
+  "private": true,
+  "type": "module",
+  "description": "Sync-Server für das Finanz-Cockpit: bewahrt einen verschlüsselten Tresor auf.",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node sync-server.ts"
+  }
+}
