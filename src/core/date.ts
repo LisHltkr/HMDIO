@@ -86,3 +86,20 @@ export function formatLong(date: IsoDate): string {
 export function formatMonth(date: IsoDate): string {
   return monthFmt.format(asUtc(date));
 }
+
+/**
+ * Liest ein Datum in deutscher Schreibweise, Tag zuerst: "15.11.2026", "5.1.26" (zweistelliges Jahr = 20JJ).
+ * Trenner: Punkt, Komma, Bindestrich oder Schrägstrich. Ohne Trenner gehen "151126" und "15112026",
+ * damit man am Handy mit dem Ziffernblock tippen kann. Gibt null zurück, wenn es kein gültiges Datum ist.
+ */
+export function parseDatumDe(eingabe: string): IsoDate | null {
+  const s = eingabe.trim();
+  const getrennt = /^(\d{1,2})[.,/-](\d{1,2})[.,/-](\d{4}|\d{2})$/.exec(s);
+  const ziffern = /^(\d{2})(\d{2})(\d{4}|\d{2})$/.exec(s);
+  const teile = getrennt ?? ziffern;
+  if (!teile) return null;
+  const [, tag, monat, jahr] = teile;
+  const y = jahr!.length === 2 ? 2000 + Number(jahr) : Number(jahr);
+  const iso = toIso({ y, m: Number(monat), d: Number(tag) });
+  return isIsoDate(iso) ? iso : null;
+}

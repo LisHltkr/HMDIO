@@ -1,5 +1,5 @@
-import { useEffect, useId, useState, type ReactNode } from 'react';
-import { formatEuro, formatSigned, parseEuro, toInputValue, type Cents } from '../core';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { formatEuro, formatLong, formatSigned, parseDatumDe, parseEuro, toInputValue, type Cents, type IsoDate } from '../core';
 
 /** Gemeinsame Oberflächen-Bausteine. Darf nur `core` importieren. */
 
@@ -128,6 +128,72 @@ export function Kennzahl(props: { label: string; children: ReactNode; ton?: 'gut
     <div className={'kennzahl' + (props.ton ? ' ton-' + props.ton : '')}>
       <span className="kennzahl-label">{props.label}</span>
       <span className="kennzahl-wert">{props.children}</span>
+    </div>
+  );
+}
+
+/**
+ * Datumseingabe, immer als TT.MM.JJJJ – egal, welche Sprache das Gerät hat.
+ * Der Kalender-Knopf öffnet die Datumsauswahl des Geräts (über ein unsichtbares natives Feld).
+ * value/onChange arbeiten mit ISO-Daten ("2026-11-15"); leer oder ungültig = "".
+ */
+export function DatumFeld(props: { id?: string; value: IsoDate; onChange: (iso: IsoDate) => void }) {
+  const [text, setText] = useState(props.value ? formatLong(props.value) : '');
+  const nativ = useRef<HTMLInputElement>(null);
+  const gelesen = text.trim() === '' ? '' : parseDatumDe(text);
+
+  // Von außen geänderte Werte übernehmen, ohne die laufende Eingabe zu stören.
+  useEffect(() => {
+    if (props.value !== (gelesen ?? '')) setText(props.value ? formatLong(props.value) : '');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.value]);
+
+  function kalenderOeffnen() {
+    const feld = nativ.current;
+    if (!feld) return;
+    try {
+      feld.showPicker();
+    } catch {
+      feld.focus();
+    }
+  }
+
+  return (
+    <div className="datum-feld">
+      <input
+        id={props.id}
+        type="text"
+        inputMode="numeric"
+        placeholder="TT.MM.JJJJ"
+        autoComplete="off"
+        value={text}
+        aria-invalid={gelesen === null}
+        onChange={(e) => {
+          setText(e.target.value);
+          props.onChange(e.target.value.trim() === '' ? '' : (parseDatumDe(e.target.value) ?? ''));
+        }}
+        onBlur={() => {
+          if (gelesen) setText(formatLong(gelesen)); // "5.1.26" → "05.01.2026"
+        }}
+      />
+      <button type="button" className="btn datum-knopf" aria-label="Kalender öffnen" onClick={kalenderOeffnen}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="16" rx="2" />
+          <path d="M3 10h18M8 3v4M16 3v4" />
+        </svg>
+      </button>
+      <input
+        ref={nativ}
+        type="date"
+        className="datum-nativ"
+        tabIndex={-1}
+        aria-hidden="true"
+        value={gelesen || ''}
+        onChange={(e) => {
+          setText(e.target.value ? formatLong(e.target.value) : '');
+          props.onChange(e.target.value);
+        }}
+      />
     </div>
   );
 }

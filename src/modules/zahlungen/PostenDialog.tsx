@@ -14,7 +14,7 @@ import {
   withSlice,
   type Rhythmus,
 } from '../../core';
-import { Dialog, Feld, GeldInput } from '../../ui';
+import { DatumFeld, Dialog, Feld, GeldInput } from '../../ui';
 import { alsOffenMarkieren, useKonten } from '../konten';
 import { kannRuecklage, terminKey, zahlungenAus, zahlungenBasis, type Posten } from './model';
 
@@ -158,10 +158,10 @@ export function PostenDialog(props: { posten?: Posten; vorlage?: 'rechnung' | 'u
             )}
           </Feld>
           <Feld label={rhythmus === 'einmalig' ? 'Fällig am' : 'Erste Fälligkeit'}>
-            {(id) => <input id={id} type="date" value={start} onChange={(e) => setStart(e.target.value)} />}
+            {(id) => <DatumFeld id={id} value={start} onChange={setStart} />}
           </Feld>
           {rhythmus !== 'einmalig' && (
-            <Feld label="Endet am (optional)">{(id) => <input id={id} type="date" value={ende} onChange={(e) => setEnde(e.target.value)} />}</Feld>
+            <Feld label="Endet am (optional)">{(id) => <DatumFeld id={id} value={ende} onChange={setEnde} />}</Feld>
           )}
         </div>
 
@@ -197,7 +197,7 @@ export function PostenDialog(props: { posten?: Posten; vorlage?: 'rechnung' | 'u
                     />
                   )}
                 </Feld>
-                <Feld label="Erste Rate">{(id) => <input id={id} type="date" value={rStart} onChange={(e) => setRStart(e.target.value)} />}</Feld>
+                <Feld label="Erste Rate">{(id) => <DatumFeld id={id} value={rStart} onChange={setRStart} />}</Feld>
               </div>
             )}
             {mitRuecklage && rKonto !== vonKonto && (

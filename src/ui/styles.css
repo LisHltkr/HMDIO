@@ -161,3 +161,9 @@ th:last-child, td:last-child { padding-right: 0; }
   .formular-raster { grid-template-columns: minmax(0, 1fr); }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Datumsfeld: immer TT.MM.JJJJ; der Knopf öffnet den Kalender des Geräts über ein unsichtbares natives Feld */
+.datum-feld { position: relative; display: flex; gap: 6px; align-items: center; min-width: 0; }
+.datum-feld input[type='text'] { flex: 1; min-width: 0; }
+.datum-feld .datum-knopf { flex: none; width: 40px; padding: 0; }
+.datum-feld .datum-nativ { position: absolute; right: 0; bottom: 0; width: 1px; height: 1px; min-height: 0; padding: 0; border: 0; opacity: 0; pointer-events: none; }
