@@ -29,3 +29,4 @@ Was wird dadurch leichter, was schwerer, was ist noch offen?
 
 | Nr. | Entscheidung | Status |
 |-----|--------------|--------|
+| [0001](0001-installer-aus-github-actions.md) | Installer entstehen in GitHub Actions, nicht auf einem PC | gilt |
