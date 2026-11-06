@@ -22,6 +22,20 @@ Kontostände werden **nur von Hand** eingetragen. Keine Bankanbindung.
 - **Abgleich**: Kontostand von Hand eintragen. Speichert je Konto `stand`, `datum`,
   `zeitpunkt` und `offen` (Termine bis `datum`, die noch nicht abgegangen sind).
 - **Ausgabe**: bereits getätigte Ausgabe in einem Lebensbereich (Budget).
+- **Sicherung**: alle Daten als Datei (unverschlüsselt), zum Aufheben oder Umziehen.
+- **Sync**: Daten zwischen deinen Geräten austauschen (nicht verwechseln mit **Abgleich**).
+- **Tresor**: der im Gerät verschlüsselte Datenstand, den der Sync-Server aufbewahrt.
+- **Fallschirm**: der Stand, der zuletzt ersetzt wurde (Konfliktlösung, weiteres Gerät, Sicherung
+  einlesen); unter „Sicherung & Sync“ als Datei zu sichern.
+
+## Sync-Regeln (Entscheidungen 0002 und 0003)
+
+1. Lokal wird immer zuerst gespeichert; der Sync kann das Speichern nie verhindern.
+2. Gesendet wird nur verschlüsselt (Passwort → PBKDF2 → AES-GCM) und nur mit `If-Match` auf den
+   zuletzt bekannten Stand. Hat ein anderes Gerät inzwischen gespeichert, entsteht ein **Konflikt**.
+3. Konflikte werden nie automatisch gemischt: Die Person wählt einen Stand, der andere wird
+   Fallschirm.
+4. Ohne Netz läuft alles weiter; Ungesendetes wird beim nächsten Abgleich gesendet.
 
 ## Rechenregeln
 
@@ -86,3 +100,13 @@ die Abgleich-Differenz verbucht es über den Port `AbgleichZiel`, den `budgets` 
 6. Modul Budgets
 7. Modul Sparen & Übersicht
 8. App-Shell, Tauri, Architekturtest, Prüfung
+
+## Ausbau: Handy, Sync, Installer (Branch `sync-handy-installer`, alle erledigt)
+
+1. Arbeitsweise und Entscheidungsprotokoll (docs/ARBEITSWEISE.md, docs/entscheidungen/)
+2. Prüfen bei jedem Push, Windows-Installer aus GitHub Actions (0001)
+3. Handy-Ansicht und Web-App für den iPhone-Home-Bildschirm (0004)
+4. Tresor: Ende-zu-Ende-Verschlüsselung (0002)
+5. Sync-Server für den eigenen Pi (0003)
+6. Seite „Sicherung & Sync“ in der App
+7. Pi-Plan (docs/pi-plan.md)
