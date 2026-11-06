@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { DatenFehler, initStore, leereDaten, parseAppData, registriereModule, serializeAppData, store } from './core';
-import { createStorage } from './storage';
+import { createStorage, laeuftInTauri } from './storage';
 import { App, autoSpeichern } from './app/App';
 import { MODULE } from './app/modules';
 import './ui/styles.css';
@@ -39,6 +39,18 @@ async function start() {
       <App speicherort={storage.beschreibung} />
     </StrictMode>,
   );
+
+  if (!laeuftInTauri()) webAppEinrichten();
+}
+
+/** Nur im Browser: Offline-Kopie der App (Service Worker) und dauerhafter Speicher (docs/entscheidungen/0004). */
+function webAppEinrichten() {
+  // Bittet den Browser, die Daten auch bei Speicherknappheit nicht zu löschen.
+  navigator.storage?.persist?.().catch(() => undefined);
+  if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+    const basis = import.meta.env.BASE_URL;
+    navigator.serviceWorker.register(`${basis}sw.js`, { scope: basis }).catch(() => undefined);
+  }
 }
 
 function Fehler(props: { titel: string; text: string; ort: string }) {
