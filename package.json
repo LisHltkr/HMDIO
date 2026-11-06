@@ -8,6 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "check": "pnpm test && pnpm build",
     "tauri": "tauri"
   },
   "dependencies": {
