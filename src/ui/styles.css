@@ -67,7 +67,7 @@ a { color: var(--akzent); }
 .feld { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .feld label { font-size: 14px; font-weight: 500; }
 .hinweis { font-size: 12px; color: var(--gedaempft); }
-input[type='text'], input[type='date'], input[type='number'], select { min-height: 40px; padding: 0 12px; border: 1px solid var(--rand-stark); border-radius: 8px; font: inherit; font-size: 15px; background: #fff; color: var(--tinte); width: 100%; }
+input[type='text'], input[type='password'], input[type='url'], input[type='date'], input[type='number'], select { min-height: 40px; padding: 0 12px; border: 1px solid var(--rand-stark); border-radius: 8px; font: inherit; font-size: 15px; background: #fff; color: var(--tinte); width: 100%; }
 input[aria-invalid='true'] { border-color: var(--fehler); }
 input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--akzent); outline-offset: 1px; }
 .geld-input { position: relative; }
@@ -153,6 +153,12 @@ th:last-child, td:last-child { padding-right: 0; }
 .budget-zeile:first-of-type { border-top: none; }
 .leer { color: var(--gedaempft); font-size: 15px; padding: 8px 0; }
 .fehlerseite { max-width: 640px; margin: 80px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 16px; }
+
+/* Sicherung & Sync */
+.fehlerbox { background: #fdecea; color: var(--fehler); border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.45; }
+.sync-hinweis { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.konflikt { display: flex; flex-direction: column; gap: 12px; }
+.sync-kurz { display: block; margin-top: 6px; }
 
 /* Handy: Navigation als schmale, wischbare Leiste oben statt Seitenspalte (docs/entscheidungen/0004). */
 @media (max-width: 800px) {
