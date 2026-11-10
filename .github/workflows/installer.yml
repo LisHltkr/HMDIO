@@ -1,0 +1,45 @@
+# Baut den Windows-Installer (siehe docs/entscheidungen/0001-installer-aus-github-actions.md).
+# Läuft:
+#  - bei jedem Pull Request → Installer zum Testen VOR dem Merge
+#  - per GitHub → Actions → „Installer bauen“ → Run workflow (den Knopf zeigt GitHub erst,
+#    wenn diese Datei auf main liegt)
+#  - bei einem Tag wie v0.2.0
+# Ergebnis: auf der Seite des Laufs unten unter „Artifacts“ → finanz-cockpit-windows.
+name: Installer bauen
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      # tauri build führt vorher "pnpm build" aus (beforeBuildCommand in tauri.conf.json)
+      - run: pnpm tauri build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: finanz-cockpit-windows
+          path: |
+            src-tauri/target/release/bundle/msi/*.msi
+            src-tauri/target/release/bundle/nsis/*.exe
+          if-no-files-found: error
+          retention-days: 30

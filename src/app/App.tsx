@@ -1,12 +1,22 @@
-import { useEffect, useState } from 'react';
-import { alleModule, store } from '../core';
+import { useEffect, useMemo, useState } from 'react';
+import { alleModule, store, type Seite } from '../core';
+import type { Sync } from '../storage/sync';
+import { SicherungSeite } from './SicherungSeite';
+import { SyncHinweis, SyncKurz } from './SyncHinweis';
 
 const SEITE_KEY = 'finanz-cockpit/seite';
+const SICHERUNG = 'sicherung';
 
-export function App(props: { speicherort: string }) {
-  const seiten = alleModule()
-    .flatMap((m) => m.seiten ?? [])
-    .sort((a, b) => a.reihenfolge - b.reihenfolge);
+export function App(props: { speicherort: string; sync: Sync }) {
+  const { speicherort, sync } = props;
+  // Seiten der App selbst (kein Fachmodul): Sicherung & Sync kennt Speicher und Sync.
+  const appSeiten = useMemo<Seite[]>(
+    () => [
+      { id: SICHERUNG, titel: 'Sicherung & Sync', reihenfolge: 90, Komponente: () => <SicherungSeite sync={sync} speicherort={speicherort} /> },
+    ],
+    [sync, speicherort],
+  );
+  const seiten = [...alleModule().flatMap((m) => m.seiten ?? []), ...appSeiten].sort((a, b) => a.reihenfolge - b.reihenfolge);
   const [aktiv, setAktiv] = useState(() => {
     try {
       return localStorage.getItem(SEITE_KEY) ?? seiten[0]?.id;
@@ -41,10 +51,14 @@ export function App(props: { speicherort: string }) {
           ))}
         </ul>
         <div className="nav-fuss" title="Hier liegen deine Daten">
-          Daten: {props.speicherort}
+          Daten: {speicherort}
+          <SyncKurz sync={sync} />
         </div>
       </nav>
-      <main className="inhalt">{seite && <seite.Komponente key={seite.id} />}</main>
+      <main className="inhalt">
+        <SyncHinweis sync={sync} oeffnen={() => setAktiv(SICHERUNG)} />
+        {seite && <seite.Komponente key={seite.id} />}
+      </main>
     </div>
   );
 }

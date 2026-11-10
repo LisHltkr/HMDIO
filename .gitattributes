@@ -1,0 +1,7 @@
+# Zeilenenden im Repo immer LF. Dateien, die auf dem Pi laufen, auch beim Auschecken unter Windows LF.
+* text=auto
+server/** text eol=lf
+*.sh text eol=lf
+*.png binary
+*.ico binary
+*.icns binary

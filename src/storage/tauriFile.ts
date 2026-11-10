@@ -8,6 +8,13 @@ const BACKUP_ORDNER = 'backups';
 const MAX_BACKUPS = 10;
 const opts = { baseDir: BaseDirectory.AppData };
 
+/** Legt eine Datei im Unterordner „exporte“ des App-Datenordners ab und gibt den vollen Pfad zurück. */
+export async function exportiereInAppOrdner(name: string, text: string): Promise<string> {
+  await mkdir('exporte', { ...opts, recursive: true });
+  await writeTextFile(`exporte/${name}`, text, opts);
+  return join(await appDataDir(), 'exporte', name);
+}
+
 /**
  * Speichert alles in einer JSON-Datei im App-Datenordner.
  * - Schreiben über eine temporäre Datei + Umbenennen, damit nie eine halbe Datei entsteht.

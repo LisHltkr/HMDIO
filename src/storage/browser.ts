@@ -2,9 +2,12 @@ import type { StorageAdapter } from '../core';
 
 const KEY = 'finanz-cockpit/finanzen.json';
 
-/** Fallback für die Entwicklung im Browser (ohne Tauri). */
+/**
+ * Speicher im Browser: die Web-App (z. B. vom iPhone-Home-Bildschirm) und die Entwicklung ohne Tauri.
+ * Sicher vor Verlust wird er erst mit Export oder Sync (docs/entscheidungen/0004).
+ */
 export const browserStorage: StorageAdapter = {
-  beschreibung: 'Browser-Speicher (nur Entwicklung)',
+  beschreibung: 'auf diesem Gerät (Browser-Speicher)',
   async load() {
     return localStorage.getItem(KEY);
   },

@@ -67,7 +67,7 @@ a { color: var(--akzent); }
 .feld { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .feld label { font-size: 14px; font-weight: 500; }
 .hinweis { font-size: 12px; color: var(--gedaempft); }
-input[type='text'], input[type='date'], input[type='number'], select { min-height: 40px; padding: 0 12px; border: 1px solid var(--rand-stark); border-radius: 8px; font: inherit; font-size: 15px; background: #fff; color: var(--tinte); width: 100%; }
+input[type='text'], input[type='password'], input[type='url'], input[type='date'], input[type='number'], select { min-height: 40px; padding: 0 12px; border: 1px solid var(--rand-stark); border-radius: 8px; font: inherit; font-size: 15px; background: #fff; color: var(--tinte); width: 100%; }
 input[aria-invalid='true'] { border-color: var(--fehler); }
 input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--akzent); outline-offset: 1px; }
 .geld-input { position: relative; }
@@ -154,10 +154,29 @@ th:last-child, td:last-child { padding-right: 0; }
 .leer { color: var(--gedaempft); font-size: 15px; padding: 8px 0; }
 .fehlerseite { max-width: 640px; margin: 80px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 16px; }
 
+/* Sicherung & Sync */
+.fehlerbox { background: #fdecea; color: var(--fehler); border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.45; }
+.sync-hinweis { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.konflikt { display: flex; flex-direction: column; gap: 12px; }
+.sync-kurz { display: block; margin-top: 6px; }
+
+/* Handy: Navigation als schmale, wischbare Leiste oben statt Seitenspalte (docs/entscheidungen/0004). */
 @media (max-width: 800px) {
   .app { flex-direction: column; }
-  .nav { width: auto; height: auto; position: static; }
-  .inhalt { padding: 24px 16px; }
-  .formular-raster { grid-template-columns: minmax(0, 1fr); }
+  .nav { width: auto; height: auto; position: sticky; top: 0; z-index: 5; padding: 10px 12px 8px; gap: 6px; }
+  .nav-marke { padding: 0 4px; }
+  .nav-marke strong { font-size: 16px; }
+  .nav-marke span, .nav-fuss { display: none; }
+  .nav ul { flex-direction: row; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .nav ul::-webkit-scrollbar { display: none; }
+  .nav li { flex: none; }
+  .nav button { width: auto; white-space: nowrap; padding: 8px 12px; font-size: 14px; }
+  .inhalt { padding: 20px 16px 32px; gap: 20px; }
+  .seitenkopf h1 { font-size: 24px; }
+  .karte, .karte.held { padding: 18px; }
+  .held-zahl { font-size: 44px; }
+  .raster, .formular-raster { grid-template-columns: minmax(0, 1fr); }
+  .dialog-hintergrund { padding: 16px 8px; }
+  .dialog { padding: 20px; }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
