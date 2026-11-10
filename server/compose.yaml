@@ -1,0 +1,31 @@
+# Sync-Server auf dem Pi (Anleitung: docs/pi-plan.md)
+#   Starten:      docker compose up -d --build
+#   Zustand:      docker compose ps        Protokoll: docker compose logs --tail 50
+#   Aktualisieren: docker compose build --pull && docker compose up -d
+services:
+  sync:
+    build: .
+    container_name: finanz-sync
+    restart: unless-stopped
+    ports:
+      # Nur lokal auf dem Pi. Nach außen geht es ausschließlich über „tailscale serve“ (HTTPS).
+      - "127.0.0.1:8787:8787"
+    environment:
+      TOKEN_DATEI: /run/secrets/sync_token
+      # Wer per Browser zugreifen darf: die Web-App auf GitHub Pages und die Desktop-App (Tauri, Windows).
+      ERLAUBTE_URSPRUENGE: "https://lishltkr.github.io,http://tauri.localhost,https://tauri.localhost"
+      MAX_VERSIONEN: "30"
+    secrets:
+      - sync_token
+    volumes:
+      - ./daten:/daten
+    # Härtung: schreibgeschützt, keine Sonderrechte, wenig Speicher.
+    read_only: true
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 128m
+
+secrets:
+  sync_token:
+    file: ./token.txt

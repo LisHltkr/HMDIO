@@ -3,11 +3,14 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "packageManager": "pnpm@10.34.9",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "check": "pnpm test && pnpm build",
+    "sync-server": "node server/sync-server.ts",
     "tauri": "tauri"
   },
   "dependencies": {

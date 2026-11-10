@@ -7,3 +7,4 @@ export * from './clock';
 export * from './module';
 export * from './store';
 export * from './persistence';
+export * from './tresor';
