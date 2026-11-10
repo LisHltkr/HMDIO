@@ -15,6 +15,8 @@ jeder Idee gern ein GitHub-Issue werden, dann verweist der Commit darauf („Clo
 | 6 | Optionen, die man einstellen kann | offen, Frage an Lisa |
 | 7 | Zusätzliches Einkommen (Vinted, eBay, Aufträge) | offen, Fragen an Lisa |
 | 8 | Sparen & Rücklagen: Geld einzahlen oder entnehmen | offen, Fragen an Lisa; zusammen mit 4 planen |
+| 9 | Kontoauszüge als CSV einlesen und auswerten | offen, Fragen an Lisa |
+| 10 | Zahlenfelder absichern: nur Ziffern annehmen | offen, Frage an Lisa |
 
 ## 1 – Datumsfelder immer TT.MM.JJJJ
 
@@ -110,3 +112,41 @@ jeder Idee gern ein GitHub-Issue werden, dann verweist der Commit darauf („Clo
      „Kfz-Versicherung“?
   3. Jede Ein- und Auszahlung landet im Verlauf (Idee 4) und lässt sich dort zurücknehmen. Deshalb
      am besten zusammen mit dem Verlauf bauen.
+
+## 9 – Kontoauszüge als CSV einlesen und auswerten
+
+- **Wunsch:** „Automatischer Input/Analyse von CSV-Kontoauszügen“ (10.11.2026)
+- **Heute:**
+  - Kontostände und Ausgaben werden nur von Hand eingetragen.
+  - Beim Kontoabgleich lässt sich die Differenz gesammelt einem Lebensbereich zuordnen.
+- **Vorschlag:** Eine CSV-Datei aus dem Online-Banking (Export, keine Bankanbindung) wird **nur auf
+  dem Gerät** gelesen.
+  - Vorschau der Buchungen, vor dem Übernehmen.
+  - Abbuchungen werden geplanten Posten zugeordnet, zum Beispiel „Miete 780 €“, und dann als
+    „abgegangen“ abgehakt.
+  - Übrige Ausgaben werden Lebensbereichen vorgeschlagen, mit Regeln wie „REWE → Essen“.
+  - Bereits eingelesene Buchungen werden erkannt, damit nichts doppelt zählt.
+  - Daraus eine Auswertung: Ausgaben je Lebensbereich und Monat, wiederkehrende Abbuchungen, die
+    noch nicht als Fixkosten eingetragen sind.
+- **Offene Fragen an Lisa:**
+  1. Welche Bank oder Banken? Jede Bank hat ihr eigenes CSV-Format. Eine Beispieldatei mit
+     geschwärzten Namen und Beträgen hilft beim Bauen.
+  2. Soll der eingelesene Endsaldo den Kontostand ersetzen? Das wäre ein Kontoabgleich ohne Abtippen.
+  3. Nur am Desktop, oder auch am iPhone über die Dateien-App?
+- **Hinweis:** Passt gut zum Verlauf (Idee 4): Eingelesene Buchungen landen dort.
+
+## 10 – Zahlenfelder absichern
+
+- **Wunsch:** „Zahlenfelder absichern – nur Zahlen, keine Sonderzeichen (verhindern?)“ (10.11.2026)
+- **Heute:**
+  - Betragsfelder nehmen jeden Text an. Ist er kein gültiger Betrag, wird das Feld rot und der Wert
+    nicht übernommen.
+  - Am Handy öffnet sich schon die Zahlentastatur. Am Desktop kann man trotzdem Buchstaben tippen.
+  - Gehaltstag und Tag der Rate sind Zahlenfelder des Browsers. Was sie zulassen, ist je nach
+    Gerät unterschiedlich.
+- **Vorschlag:** Beim Tippen und Einfügen werden nur Ziffern, ein Komma und Tausenderpunkte
+  angenommen. Alles andere erscheint gar nicht erst.
+  - Ein eingefügtes „1.234,56 €“ wird zu „1.234,56“.
+  - Das gilt für alle Betrags- und Tagesfelder, an einer Stelle gebaut (`src/ui`).
+- **Offene Frage an Lisa:** Ein Minus nur dort, wo es Sinn ergibt (Kontostand im Dispo), sonst
+  gesperrt? Vorschlag: ja.
