@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { clock, formatLong, formatShort, neueId, sum, useAppData } from '../../core';
-import { Betrag, Feld, Fortschritt, GeldInput, Karte, Kennzahl, Leer, SeitenKopf } from '../../ui';
+import { Betrag, DatumFeld, Feld, Fortschritt, GeldInput, Karte, Kennzahl, Leer, SeitenKopf } from '../../ui';
 import { kontextAus, useKonten } from '../konten';
 import { monatsBelastung, useZahlungen } from '../zahlungen';
 import { aktualisiereBudgets, budgetStaende, neueAusgabe, useBudgets, type Kategorie } from './model';
@@ -188,7 +188,7 @@ function AusgabenKarte() {
               </select>
             )}
           </Feld>
-          <Feld label="Datum">{(id) => <input id={id} type="date" value={datum} onChange={(e) => setDatum(e.target.value)} />}</Feld>
+          <Feld label="Datum">{(id) => <DatumFeld id={id} value={datum} onChange={setDatum} />}</Feld>
           <Feld label="Notiz (optional)">{(id) => <input id={id} type="text" value={notiz} onChange={(e) => setNotiz(e.target.value)} />}</Feld>
         </div>
         <button type="submit" className="btn btn-primary" style={{ alignSelf: 'flex-start' }} disabled={!betrag || !kat}>

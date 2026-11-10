@@ -6,6 +6,8 @@ import {
   KONTO_ARTEN,
   KONTO_ART_LABEL,
   aktualisiereKonten,
+  gehaltstagAusEingabe,
+  gehaltstagHinweis,
   ausblickFuer,
   istEingetragen,
   kontenAus,
@@ -102,17 +104,17 @@ function GehaltKarte() {
             <GeldInput id={id} value={gehalt.betrag} onChange={(c) => c !== null && aktualisiereKonten((d) => ({ ...d, gehalt: { ...d.gehalt, betrag: c } }))} />
           )}
         </Feld>
-        <Feld label="Gehaltseingang am" hinweis="Tag im Monat; 31 = Monatsende">
+        <Feld label="Gehaltseingang am" hinweis={gehaltstagHinweis(gehalt.tag, kontextAus(data).heute)}>
           {(id) => (
             <input
               id={id}
               type="number"
-              min={1}
-              max={31}
+              inputMode="numeric"
               value={gehalt.tag}
               onChange={(e) => {
-                const tag = Number(e.target.value);
-                if (Number.isInteger(tag) && tag >= 1 && tag <= 31) aktualisiereKonten((d) => ({ ...d, gehalt: { ...d.gehalt, tag } }));
+                // ohne min/max, damit die Pfeile rundlaufen können: 1 ↓ → 31 (Monatsende), 31 ↑ → 1
+                const tag = e.target.value === '' ? null : gehaltstagAusEingabe(Number(e.target.value));
+                if (tag !== null) aktualisiereKonten((d) => ({ ...d, gehalt: { ...d.gehalt, tag } }));
               }}
             />
           )}

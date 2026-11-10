@@ -1,8 +1,11 @@
 import { z } from 'zod';
 import {
   cashflowQuellen,
+  clampedDate,
   clock,
+  formatShort,
   isIsoDate,
+  parseIso,
   kontoAusblick,
   lastPayday,
   nextPayday,
@@ -131,4 +134,22 @@ export function alsOffenMarkieren(data: AppData, kontoId: KontoId, key: string, 
         : k,
     ),
   });
+}
+
+/**
+ * Eingabe im Feld „Gehaltseingang am“ in einen Tag 1–31 übersetzen. Das Feld läuft rund:
+ * „runter“ von 1 ergibt 0 → 31 (Monatsende), „hoch“ von 31 ergibt 32 → 1. Sonst null = ignorieren.
+ */
+export function gehaltstagAusEingabe(eingabe: number): number | null {
+  if (!Number.isInteger(eingabe)) return null;
+  if (eingabe === 0) return 31;
+  if (eingabe === 32) return 1;
+  return eingabe >= 1 && eingabe <= 31 ? eingabe : null;
+}
+
+/** Hinweis zum Gehaltstag; ab dem 29. mit dem echten Datum in diesem Monat (31 → „30.11.“). */
+export function gehaltstagHinweis(tag: number, heute: IsoDate): string {
+  if (tag < 29) return 'Tag im Monat; 31 = Monatsende';
+  const { y, m } = parseIso(heute);
+  return `Tag im Monat; 31 = Monatsende (diesen Monat: ${formatShort(clampedDate(y, m, tag))})`;
 }
